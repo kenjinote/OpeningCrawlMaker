@@ -314,7 +314,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPreInst, LPSTR pCmdLine, int 
 	AdjustWindowRect(&rect, WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN, 0);
 	HWND hWnd = CreateWindow(
 		szClassName,
-		TEXT("CrawMaker"),
+		TEXT("Crawl Maker"),
 		WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN,
 		CW_USEDEFAULT,
 		0,
