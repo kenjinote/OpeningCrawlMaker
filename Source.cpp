@@ -52,6 +52,7 @@ public:
 		d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
 		d3dpp.EnableAutoDepthStencil = TRUE;
 		d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+		d3dpp.MultiSampleType = D3DMULTISAMPLE_8_SAMPLES;
 		if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, m_hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &g_pd3dDevice)))return FALSE;
 		g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 		D3DLIGHT9 light;
@@ -79,6 +80,7 @@ public:
 		LOGFONT lf = { 0 };
 		lf.lfHeight = 16;
 		lf.lfStrikeOut = 1;
+		lf.lfWeight = FW_HEAVY;
 		lstrcpy(lf.lfFaceName, FONT_NAME);
 		hFont = CreateFontIndirect(&lf);
 		SelectObject(hdc, hFont);
@@ -142,7 +144,7 @@ public:
 				for (auto pMesh : m_pTextMeshList)
 				{
 					D3DXMatrixIdentity(&matView);
-					D3DXMatrixTranslation(&matHeading, -5.25f, time, 4.0f);
+					D3DXMatrixTranslation(&matHeading, -5.10f, time, 4.0f);
 					D3DXMatrixLookAtLH(&matCameraPos, &vecEyePt, &vecLookatPt, &vecUpVec);
 					D3DXMatrixMultiply(&matView, &matView, &matHeading);
 					D3DXMatrixMultiply(&matView, &matView, &matCameraPos);
@@ -225,7 +227,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	switch (msg)
 	{
 	case WM_CREATE:
-		hFont = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, FONT_NAME);
+		hFont = CreateFont(-20, 0, 0, 0, FW_HEAVY, 0, 0, 0, 0, 0, 0, 0, 0, FONT_NAME);
 		hEdit = CreateWindowEx(WS_EX_CLIENTEDGE, TEXT("EDIT"), TEXT("Turmoil has engulfed the\r\nGalactic  Republic.  The\r\ntaxation of trade routes\r\nto outlying star systems\r\nis  in  dispute.\r\nHoping  to  resolve  the\r\nmatter  with  a blockade\r\nof  deadly  battleships,\r\nthe   greedy   Trade\r\nFederation  has  stopped\r\nall   shipping   to  the\r\nsmall  planet  of  Naboo.\r\nWhile  the  Congress  of\r\nthe  Republic  endlessly\r\ndebates   this  alarming\r\nchain   of  events,  the\r\nSupreme Chancellor has\r\nsecretly  dispatched two\r\nJedi   Knights,   the\r\nguardians  of  peace and\r\njustice  in  the  galaxy,\r\nto settle the conflict...."), WS_VISIBLE | WS_CHILD | WS_TABSTOP | ES_AUTOVSCROLL /*| WS_HSCROLL | WS_VSCROLL*/ | ES_MULTILINE, 0, 0, 0, 0, hWnd, 0, ((LPCREATESTRUCT)lParam)->hInstance, 0);
 		SendMessage(hEdit, WM_SETFONT, (WPARAM)hFont, 0);
 		hButton = CreateWindow(TEXT("BUTTON"), TEXT("±ÆÒ°¼®ÝGIF‚É‘‚«o‚µ(&O)..."), WS_VISIBLE | WS_CHILD, 0, 0, 0, 0, hWnd, (HMENU)ID_OUTPUT, ((LPCREATESTRUCT)lParam)->hInstance, 0);
